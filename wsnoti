@@ -1,0 +1,9 @@
+#!/bin/bash
+getws() {
+i3-msg -t get_workspaces | jq ".[] | select(.focused==true).name" | cut -d"\"" -f2
+}
+num=`getws`
+exec 3> >(zenity --notification --listen)
+echo "tooltip: workspace : ${num}" >&3
+exec 3>&-
+exit 0
